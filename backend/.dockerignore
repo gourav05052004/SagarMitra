@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.env
+temp_inference.jpg
+runs/
+complement_evaluations/
+complement_tile_evaluations/
+.git/
+.dockerignore
+Dockerfile

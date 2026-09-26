@@ -1,0 +1,28 @@
+# Python Cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual Environments
+venv/
+env/
+.env
+
+# Heavy Machine Learning Models & Datasets
+*.pt
+*.pth
+*.onnx
+models/
+test_images/
+records/
+runs/
+
+# Deployment Artifacts
+backend_bundle.zip
+bundle_manifest.json
+setup.sh
+
+# OS / IDE
+.vscode/
+.idea/
+.DS_Store

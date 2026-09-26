@@ -1,0 +1,20 @@
+{
+  "settings_version": "0.0.6",
+  "datasets_dir": "D:\\CAPSTONE_APP\\backend\\source\\complementary_expert\\complement_detector\\dataset",
+  "weights_dir": "D:\\CAPSTONE_APP\\backend\\source\\complementary_expert\\complement_detector\\weights",
+  "runs_dir": "D:\\CAPSTONE_APP\\backend\\source\\complementary_expert\\complement_detector\\runs",
+  "uuid": "53fa5f0b2f476d18180b1c7ab98b0702b08de7d30ccb857201944b95b844c8eb",
+  "sync": false,
+  "api_key": "",
+  "openai_api_key": "",
+  "clearml": false,
+  "comet": false,
+  "dvc": false,
+  "hub": false,
+  "mlflow": false,
+  "neptune": false,
+  "raytune": false,
+  "tensorboard": false,
+  "wandb": false,
+  "vscode_msg": false
+}
