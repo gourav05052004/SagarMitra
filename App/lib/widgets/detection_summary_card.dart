@@ -85,7 +85,7 @@ class DetectionSummaryCard extends StatelessWidget {
                   avatar: Icon(icon, size: 16, color: color),
                   label: Text(
                     "$name: ${entry.value}",
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.black87,
                       fontWeight: FontWeight.w600,
                       fontSize: 12,

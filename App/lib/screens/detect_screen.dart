@@ -42,9 +42,11 @@ class _DetectScreenState extends State<DetectScreen> {
         });
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Failed to access media: $e")),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Failed to access media: $e")),
+        );
+      }
     }
   }
 
@@ -329,7 +331,7 @@ class _DetectScreenState extends State<DetectScreen> {
                         child: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                           decoration: BoxDecoration(
-                            color: Colors.black60,
+                            color: Colors.black54,
                             borderRadius: BorderRadius.circular(6),
                           ),
                           child: const Row(

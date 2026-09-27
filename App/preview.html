@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maritime Vision UI Preview</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    .phone-container {
+      max-width: 412px;
+      height: 840px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 12px #1e293b;
+      border-radius: 40px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      background-color: #f8fafc;
+      margin: 20px auto;
+      position: relative;
+    }
+    .screen-content {
+      flex: 1;
+      overflow-y: auto;
+      display: none;
+    }
+    .screen-content.active {
+      display: block;
+    }
+    .badge-box {
+      border: 2px solid #22c55e;
+      background: rgba(34, 197, 94, 0.15);
+      position: absolute;
+    }
+    .badge-tag {
+      background: #22c55e;
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 6px;
+      position: absolute;
+      top: -20px;
+      left: -2px;
+      border-radius: 4px 4px 0 0;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-800 p-4 font-sans flex flex-col items-center min-h-screen">
+  
+  <div class="text-center mb-2">
+    <h2 class="text-xl font-bold text-white tracking-wide">Maritime Vision Flutter App</h2>
+    <p class="text-sm text-slate-400">Click the bottom navigation bar to preview all three screens</p>
+  </div>
+
+  <div class="phone-container border-4 border-slate-700">
+    <!-- Status Bar -->
+    <div class="bg-[#0b3b64] text-white px-6 pt-3 pb-1 flex justify-between items-center text-xs select-none">
+      <span class="font-semibold">02:30</span>
+      <div class="flex items-center space-x-2">
+        <span>5G</span>
+        <span>100% 🔋</span>
+      </div>
+    </div>
+
+    <!-- App Bar -->
+    <div class="bg-[#0F4C81] text-white px-4 py-3.5 flex items-center justify-between shadow-md select-none">
+      <div class="flex items-center space-x-2.5">
+        <svg class="w-6 h-6 text-cyan-300" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M4 19h16l-2 3H6l-2-3zM12 2L4 16h8V2zm1 3.5V16h7L13 5.5z"/>
+        </svg>
+        <span class="font-bold text-base tracking-tight">Maritime Object Detection</span>
+      </div>
+      <button onclick="pingBackend()" title="Check connection" class="p-1 rounded-full hover:bg-white/10 active:scale-95 transition">
+        <svg class="w-5 h-5 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Live Status Banner -->
+    <div id="statusBanner" class="bg-emerald-50 border-b border-emerald-100 px-4 py-2 flex items-center justify-between transition-all select-none">
+      <div class="flex items-center space-x-2 text-emerald-800 text-xs font-semibold">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span id="statusBannerText">Backend Online (AWS EC2 Active)</span>
+      </div>
+      <span class="text-[10px] text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full font-mono">13.200.225.184</span>
+    </div>
+
+    <!-- SCREEN 1: DETECT -->
+    <div id="screenDetect" class="screen-content active p-4 space-y-4">
+      <!-- Media Buttons -->
+      <div class="grid grid-cols-2 gap-3">
+        <button class="flex items-center justify-center space-x-2 bg-blue-50 text-[#0F4C81] border border-blue-200 py-2.5 rounded-xl font-medium text-xs shadow-sm hover:bg-blue-100 active:scale-98 transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          <span>Take Photo</span>
+        </button>
+        <button class="flex items-center justify-center space-x-2 bg-white text-slate-700 border border-slate-200 py-2.5 rounded-xl font-medium text-xs shadow-sm hover:bg-slate-50 active:scale-98 transition">
+          <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          <span>Gallery</span>
+        </button>
+      </div>
+
+      <!-- Detection Image Viewport with Bounding Boxes -->
+      <div class="relative bg-slate-900 rounded-2xl overflow-hidden shadow-lg border border-slate-200 h-52 group">
+        <img 
+          src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80" 
+          alt="Ocean Detection Scene" 
+          class="w-full h-full object-cover opacity-90"
+        />
+        
+        <!-- Bounding Box 1: Boat -->
+        <div class="badge-box" style="top: 25%; left: 16%; width: 34%; height: 50%;">
+          <div class="badge-tag">Boat 95.2%</div>
+        </div>
+
+        <!-- Bounding Box 2: Buoy -->
+        <div class="badge-box !border-amber-400 !bg-amber-400/20" style="top: 48%; left: 62%; width: 14%; height: 26%;">
+          <div class="badge-tag !bg-amber-500">Buoy 88.4%</div>
+        </div>
+
+        <div class="absolute bottom-2 right-2 bg-black/60 backdrop-blur-sm text-white text-[10px] px-2.5 py-1 rounded-full flex items-center space-x-1">
+          <span>🔍 Tap to Zoom</span>
+        </div>
+      </div>
+
+      <!-- Detection Breakdown Card -->
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 space-y-3">
+        <div class="flex items-center justify-between">
+          <div class="font-bold text-sm text-slate-800">Detection Breakdown</div>
+          <span class="bg-blue-100 text-[#0F4C81] text-[11px] font-bold px-2.5 py-0.5 rounded-full">2 Found</span>
+        </div>
+
+        <!-- Category Chips -->
+        <div class="flex flex-wrap gap-2">
+          <div class="bg-blue-50 border border-blue-200 text-[#0F4C81] text-xs font-semibold px-2.5 py-1 rounded-lg flex items-center space-x-1.5">
+            <span>⛵</span>
+            <span>Boat: 1</span>
+          </div>
+          <div class="bg-amber-50 border border-amber-200 text-amber-900 text-xs font-semibold px-2.5 py-1 rounded-lg flex items-center space-x-1.5">
+            <span>📍</span>
+            <span>Buoy: 1</span>
+          </div>
+        </div>
+
+        <div class="border-t border-slate-100 pt-2 space-y-2">
+          <!-- Instance 1 -->
+          <div class="flex items-center justify-between text-xs py-1">
+            <div class="flex items-center space-x-2">
+              <div class="w-6 h-6 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-[10px]">1</div>
+              <div>
+                <div class="font-semibold text-slate-800">Boat (Vessel)</div>
+                <div class="text-[10px] text-slate-400">Box: [120, 180, 240×160]</div>
+              </div>
+            </div>
+            <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold px-2 py-0.5 rounded-md text-[11px]">95.2%</span>
+          </div>
+
+          <!-- Instance 2 -->
+          <div class="flex items-center justify-between text-xs py-1">
+            <div class="flex items-center space-x-2">
+              <div class="w-6 h-6 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-[10px]">2</div>
+              <div>
+                <div class="font-semibold text-slate-800">Buoy (Marker)</div>
+                <div class="text-[10px] text-slate-400">Box: [480, 320, 80×120]</div>
+              </div>
+            </div>
+            <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold px-2 py-0.5 rounded-md text-[11px]">88.4%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCREEN 2: HISTORY -->
+    <div id="screenHistory" class="screen-content p-4 space-y-3">
+      <div class="flex items-center justify-between">
+        <h3 class="font-bold text-sm text-slate-800">S3 Processing Gallery</h3>
+        <span class="text-xs text-slate-400">Pull to refresh</span>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3">
+        <!-- Item 1 -->
+        <div class="bg-white rounded-xl overflow-hidden border border-slate-200 shadow-sm cursor-pointer hover:shadow-md transition">
+          <div class="h-28 bg-slate-200 relative">
+            <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover">
+            <span class="absolute bottom-1 right-1 bg-black/60 text-white text-[9px] px-1.5 py-0.5 rounded font-mono">2 objects</span>
+          </div>
+          <div class="p-2 space-y-0.5">
+            <div class="font-semibold text-[11px] truncate text-slate-800">4f8a-92bc.jpg</div>
+            <div class="text-[10px] text-slate-400">Today • 02:24 AM</div>
+          </div>
+        </div>
+
+        <!-- Item 2 -->
+        <div class="bg-white rounded-xl overflow-hidden border border-slate-200 shadow-sm cursor-pointer hover:shadow-md transition">
+          <div class="h-28 bg-slate-200 relative">
+            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover">
+            <span class="absolute bottom-1 right-1 bg-black/60 text-white text-[9px] px-1.5 py-0.5 rounded font-mono">1 object</span>
+          </div>
+          <div class="p-2 space-y-0.5">
+            <div class="font-semibold text-[11px] truncate text-slate-800">77e1-893c.jpg</div>
+            <div class="text-[10px] text-slate-400">Yesterday • 16:05 PM</div>
+          </div>
+        </div>
+
+        <!-- Item 3 -->
+        <div class="bg-white rounded-xl overflow-hidden border border-slate-200 shadow-sm cursor-pointer hover:shadow-md transition">
+          <div class="h-28 bg-slate-200 relative">
+            <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover">
+            <span class="absolute bottom-1 right-1 bg-black/60 text-white text-[9px] px-1.5 py-0.5 rounded font-mono">4 objects</span>
+          </div>
+          <div class="p-2 space-y-0.5">
+            <div class="font-semibold text-[11px] truncate text-slate-800">90bc-12aa.jpg</div>
+            <div class="text-[10px] text-slate-400">Sep 25 • 11:20 AM</div>
+          </div>
+        </div>
+
+        <!-- Item 4 -->
+        <div class="bg-white rounded-xl overflow-hidden border border-slate-200 shadow-sm cursor-pointer hover:shadow-md transition">
+          <div class="h-28 bg-slate-200 relative">
+            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover">
+            <span class="absolute bottom-1 right-1 bg-black/60 text-white text-[9px] px-1.5 py-0.5 rounded font-mono">0 objects</span>
+          </div>
+          <div class="p-2 space-y-0.5">
+            <div class="font-semibold text-[11px] truncate text-slate-800">11ea-32ff.jpg</div>
+            <div class="text-[10px] text-slate-400">Sep 24 • 09:15 AM</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCREEN 3: SETTINGS -->
+    <div id="screenSettings" class="screen-content p-4 space-y-3">
+      <!-- IP Config Card -->
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200 space-y-3">
+        <div class="flex items-center space-x-2 text-[#0F4C81]">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2"/></svg>
+          <div class="font-bold text-sm">Backend Configuration</div>
+        </div>
+        <p class="text-xs text-slate-500">Configure your AWS Elastic IP endpoint:</p>
+        
+        <div>
+          <label class="block text-[11px] font-semibold text-slate-600 mb-1">Base URL</label>
+          <input type="text" id="baseUrlInput" value="http://13.200.225.184" class="w-full text-xs font-mono p-2.5 border border-slate-300 rounded-lg focus:outline-none focus:border-[#0F4C81]">
+        </div>
+
+        <div class="grid grid-cols-2 gap-2 pt-1">
+          <button onclick="resetDefaultIp()" class="py-2 border border-slate-300 rounded-lg text-xs font-semibold text-slate-600 hover:bg-slate-50 active:scale-95 transition">Reset Default</button>
+          <button onclick="pingBackend()" class="py-2 bg-[#0F4C81] text-white rounded-lg text-xs font-semibold hover:bg-blue-900 active:scale-95 transition flex items-center justify-center space-x-1">
+            <span id="pingBtnText">Test Ping</span>
+          </button>
+        </div>
+
+        <div id="pingStatusMsg" class="hidden text-[11px] p-2 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200 flex items-center space-x-1.5">
+          <span>✅</span>
+          <span>Health check ok: Maritime API is active.</span>
+        </div>
+      </div>
+
+      <!-- Categories Card -->
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200 space-y-2.5">
+        <div class="font-bold text-sm text-slate-800">Supported Maritime Classes</div>
+        <div class="grid grid-cols-1 gap-1.5 text-xs text-slate-700">
+          <div class="flex items-center justify-between py-1 border-b border-slate-50">
+            <span>🏊‍♂️ Swimmer</span>
+            <span class="text-slate-400 font-mono text-[10px]">ID: 1</span>
+          </div>
+          <div class="flex items-center justify-between py-1 border-b border-slate-50">
+            <span>⛵ Boat</span>
+            <span class="text-slate-400 font-mono text-[10px]">ID: 2</span>
+          </div>
+          <div class="flex items-center justify-between py-1 border-b border-slate-50">
+            <span>⚡ Jetski</span>
+            <span class="text-slate-400 font-mono text-[10px]">ID: 3</span>
+          </div>
+          <div class="flex items-center justify-between py-1 border-b border-slate-50">
+            <span>🦺 Life Saving Appliance</span>
+            <span class="text-slate-400 font-mono text-[10px]">ID: 4</span>
+          </div>
+          <div class="flex items-center justify-between py-1">
+            <span>📍 Buoy</span>
+            <span class="text-slate-400 font-mono text-[10px]">ID: 5</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Specs Card -->
+      <div class="bg-blue-50/70 rounded-2xl p-4 border border-blue-100 text-xs text-slate-600 space-y-1">
+        <div class="font-bold text-[#0F4C81] text-xs">Pipeline Model Benchmark</div>
+        <div>• Score: 61.5735 COCO bbox AP50:95</div>
+        <div>• CBNetV2 Swin-S + YOLO11s Expert Fusion</div>
+      </div>
+    </div>
+
+    <!-- Bottom Navigation Bar -->
+    <div class="bg-white border-t border-slate-200 px-6 py-2.5 flex justify-around items-center select-none shadow-lg">
+      <button onclick="switchTab('detect')" id="tabBtnDetect" class="flex flex-col items-center space-y-1 text-[#0F4C81] transition">
+        <div class="bg-blue-100 text-[#0F4C81] px-4 py-1 rounded-full">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0a2 2 0 100-4 2 2 0 000 4zm-8 4v-1m0 0a2 2 0 100-4 2 2 0 000 4zm16-4a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <span class="text-[11px] font-bold">Detect</span>
+      </button>
+
+      <button onclick="switchTab('history')" id="tabBtnHistory" class="flex flex-col items-center space-y-1 text-slate-400 hover:text-slate-600 transition">
+        <div class="px-4 py-1 rounded-full">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <span class="text-[11px] font-medium">History</span>
+      </button>
+
+      <button onclick="switchTab('settings')" id="tabBtnSettings" class="flex flex-col items-center space-y-1 text-slate-400 hover:text-slate-600 transition">
+        <div class="px-4 py-1 rounded-full">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        </div>
+        <span class="text-[11px] font-medium">Settings</span>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    function switchTab(tab) {
+      // Hide all screens
+      document.querySelectorAll('.screen-content').forEach(s => s.classList.remove('active'));
+      
+      // Reset button styles
+      ['Detect', 'History', 'Settings'].forEach(name => {
+        const btn = document.getElementById('tabBtn' + name);
+        const iconContainer = btn.querySelector('div');
+        const label = btn.querySelector('span');
+        
+        btn.classList.remove('text-[#0F4C81]');
+        btn.classList.add('text-slate-400');
+        iconContainer.classList.remove('bg-blue-100', 'text-[#0F4C81]');
+        label.classList.remove('font-bold');
+        label.classList.add('font-medium');
+      });
+
+      // Activate selected
+      const targetId = 'screen' + tab.charAt(0).toUpperCase() + tab.slice(1);
+      document.getElementById(targetId).classList.add('active');
+
+      const activeBtn = document.getElementById('tabBtn' + tab.charAt(0).toUpperCase() + tab.slice(1));
+      activeBtn.classList.remove('text-slate-400');
+      activeBtn.classList.add('text-[#0F4C81]');
+      activeBtn.querySelector('div').classList.add('bg-blue-100', 'text-[#0F4C81]');
+      activeBtn.querySelector('span').classList.add('font-bold');
+      activeBtn.querySelector('span').classList.remove('font-medium');
+    }
+
+    function pingBackend() {
+      const btnText = document.getElementById('pingBtnText');
+      if (btnText) btnText.innerText = "Pinging...";
+      
+      setTimeout(() => {
+        if (btnText) btnText.innerText = "Test Ping";
+        const msg = document.getElementById('pingStatusMsg');
+        if (msg) msg.classList.remove('hidden');
+        
+        const bannerText = document.getElementById('statusBannerText');
+        if (bannerText) bannerText.innerText = "Backend Online (AWS EC2 Active)";
+      }, 600);
+    }
+
+    function resetDefaultIp() {
+      document.getElementById('baseUrlInput').value = "http://13.200.225.184";
+      alert("Reset to default AWS Elastic IP: http://13.200.225.184");
+    }
+  </script>
+</body>
+</html>
