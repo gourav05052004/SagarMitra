@@ -53,6 +53,11 @@ sudo apt-get update -y
 sudo apt-get install -y docker.io unzip
 sudo systemctl start docker
 sudo systemctl enable docker
+
+# Create persistent directory for SQLite metadata store (survives redeployments)
+sudo mkdir -p /data
+sudo chown -R ubuntu:ubuntu /data
+
 sudo mkdir -p /opt/ml_backend
 sudo chown -R ubuntu:ubuntu /opt/ml_backend
 cd /opt/ml_backend
@@ -63,9 +68,16 @@ sudo docker build -t maritime-backend .
 echo 'Stopping old container if it exists...'
 sudo docker stop maritime-api || true
 sudo docker rm maritime-api || true
-echo 'Starting new container on port 80...'
-sudo docker run -d --name maritime-api -p 80:8000 -e AWS_ACCESS_KEY_ID=`$(aws configure get default.aws_access_key_id)` -e AWS_SECRET_ACCESS_KEY=`$(aws configure get default.aws_secret_access_key)` -e AWS_DEFAULT_REGION=$Region maritime-backend
+echo 'Starting new container on port 80 (with persistent /data volume for SQLite)...'
+sudo docker run -d --name maritime-api \
+  -p 80:8000 \
+  -v /data:/data \
+  -e AWS_ACCESS_KEY_ID=`$(aws configure get default.aws_access_key_id)` \
+  -e AWS_SECRET_ACCESS_KEY=`$(aws configure get default.aws_secret_access_key)` \
+  -e AWS_DEFAULT_REGION=$Region \
+  maritime-backend
 echo 'Deployment complete. Server is running on port 80.'
+echo 'SQLite metadata DB is persisted at /data/detections.db on the host.'
 "@
 
 # Save setup.sh and upload to S3

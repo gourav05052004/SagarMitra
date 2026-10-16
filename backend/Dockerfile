@@ -44,8 +44,17 @@ COPY . .
 # Set YOLO settings to avoid the hub prompt we fixed earlier
 RUN yolo settings reset
 
+# 5. Create a dedicated directory for the SQLite metadata store and declare it
+#    as a Docker volume so detections.db is persisted on the host across
+#    container rebuilds and restarts.
+RUN mkdir -p /data
+ENV DB_DIR=/data
+
 # Expose FastAPI port
 EXPOSE 8000
+
+# Declare /data as a mountable volume (host bind-mount overrides this)
+VOLUME ["/data"]
 
 # Start the server
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

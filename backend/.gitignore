@@ -18,9 +18,13 @@ records/
 runs/
 
 # Deployment Artifacts
-backend_bundle.zip
+*.zip
 bundle_manifest.json
 setup.sh
+
+# SQLite metadata store (generated at runtime)
+detections.db
+temp_inference.jpg
 
 # OS / IDE
 .vscode/
