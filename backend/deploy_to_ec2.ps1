@@ -70,6 +70,7 @@ sudo docker stop maritime-api || true
 sudo docker rm maritime-api || true
 echo 'Starting new container on port 80 (with persistent /data volume for SQLite)...'
 sudo docker run -d --name maritime-api \
+  --restart unless-stopped \
   -p 80:8000 \
   -v /data:/data \
   -e AWS_ACCESS_KEY_ID=`$(aws configure get default.aws_access_key_id)` \

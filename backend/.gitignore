@@ -1,32 +1,65 @@
 # Python Cache
 __pycache__/
-*.pyc
-*.pyo
+*.py[cod]
+*$py.class
+*.so
 
-# Virtual Environments
+# Virtual Environments & Local Config
 venv/
+.venv/
 env/
+ENV/
 .env
+.env.*
+!.env.example
 
-# Heavy Machine Learning Models & Datasets
+# Secrets & AWS Credentials
+*.pem
+*.key
+aws-credentials*
+credentials.json
+
+# Heavy Machine Learning Models & Checkpoints
 *.pt
 *.pth
+*.bin
 *.onnx
+*.engine
+*.ckpt
+*.safetensors
+*.h5
+*.pkl
 models/
 test_images/
 records/
 runs/
+datasets/
+wandb/
 
-# Deployment Artifacts
+# Deployment Artifacts & Archives
 *.zip
+*.tar
+*.tar.gz
+*.7z
+backend_bundle.zip
+backend_code_update.zip
 bundle_manifest.json
 setup.sh
+temp_patch.sh
+s3_backup/
 
-# SQLite metadata store (generated at runtime)
+# SQLite & Runtime Storage
+*.db
+*.sqlite
+*.sqlite3
 detections.db
 temp_inference.jpg
 
-# OS / IDE
+# Testing, Logs & IDE
+*.log
+.pytest_cache/
+.coverage
 .vscode/
 .idea/
 .DS_Store
+Thumbs.db

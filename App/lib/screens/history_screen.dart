@@ -34,7 +34,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
       final items = await widget.apiService.getHistory(limit: 50);
       if (mounted) {
         setState(() {
-          _history = items;
+          _history = items.where((item) {
+            final name = item.filename.toLowerCase();
+            return name.endsWith('.jpg') ||
+                name.endsWith('.jpeg') ||
+                name.endsWith('.png') ||
+                name.endsWith('.webp') ||
+                name.endsWith('.bmp');
+          }).toList();
           _isLoading = false;
         });
       }

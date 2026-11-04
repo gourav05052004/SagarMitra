@@ -1,0 +1,159 @@
+# ==============================================================================
+# SagarMitra Root .gitignore
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# 1. Security & Credentials (NEVER commit secrets to GitHub)
+# ------------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.pkcs12
+*.pfx
+*.p12
+*.cer
+*.crt
+id_rsa*
+aws-credentials*
+credentials.json
+service-account*.json
+
+# ------------------------------------------------------------------------------
+# 2. Machine Learning Checkpoints, Weights & Large Datasets
+# ------------------------------------------------------------------------------
+*.pt
+*.pth
+*.bin
+*.onnx
+*.engine
+*.ckpt
+*.safetensors
+*.h5
+*.pkl
+*.pickle
+backend/models/
+backend/records/
+backend/test_images/
+datasets/
+**/datasets/
+runs/
+**/runs/
+wandb/
+.neptune/
+
+# ------------------------------------------------------------------------------
+# 3. Python Artifacts & Virtual Environments
+# ------------------------------------------------------------------------------
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+*.egg-info/
+.installed.cfg
+*.egg
+.pytest_cache/
+.mypy_cache/
+.coverage
+.coverage.*
+htmlcov/
+.ipynb_checkpoints/
+
+# ------------------------------------------------------------------------------
+# 4. Flutter & Dart Build Outputs & Local Caches
+# ------------------------------------------------------------------------------
+.dart_tool/
+**/.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+**/build/
+android/app/debug/
+android/app/profile/
+android/app/release/
+ios/Flutter/.last_build_id
+ios/Pods/
+*.apk
+*.aab
+*.ipa
+*.symbols
+*.map.json
+.widget_preview/
+
+# ------------------------------------------------------------------------------
+# 5. Database Files, Runtime Artifacts & Deployment Bundles
+# ------------------------------------------------------------------------------
+*.db
+*.sqlite
+*.sqlite3
+detections.db
+temp_inference.jpg
+*.zip
+*.tar
+*.tar.gz
+*.7z
+backend_bundle.zip
+backend_code_update.zip
+bundle_manifest.json
+setup.sh
+temp_patch.sh
+s3_backup/
+**/s3_backup/
+
+# ------------------------------------------------------------------------------
+# 6. Operating System Files
+# ------------------------------------------------------------------------------
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+
+# ------------------------------------------------------------------------------
+# 7. IDE, Editor & Tool Settings
+# ------------------------------------------------------------------------------
+.vscode/
+**/.vscode/
+.idea/
+**/.idea/
+*.iml
+*.iws
+*.ipr
+*.swp
+*.swo
+*.sublime-project
+*.sublime-workspace
+.history/
+.buildlog/

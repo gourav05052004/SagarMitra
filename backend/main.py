@@ -201,6 +201,8 @@ def export_csv():
 
 
 # ── /history (legacy S3 listing) ──────────────────────────────────────────────
+VALID_IMAGE_EXTENSIONS = ('.jpg', '.jpeg', '.png', '.webp', '.bmp')
+
 @app.get("/history")
 def get_history(limit: int = 20):
     """Legacy endpoint: list images from S3 (no detailed metadata)."""
@@ -209,7 +211,13 @@ def get_history(limit: int = 20):
         if 'Contents' not in response:
             return {"history": []}
 
-        objects = sorted(response['Contents'], key=lambda x: x['LastModified'], reverse=True)
+        # Filter out non-image files (e.g. .zip, .sh, .txt, scripts, etc.)
+        image_objects = [
+            obj for obj in response['Contents']
+            if obj['Key'].lower().endswith(VALID_IMAGE_EXTENSIONS)
+        ]
+
+        objects = sorted(image_objects, key=lambda x: x['LastModified'], reverse=True)
 
         history = []
         for obj in objects[:limit]:
